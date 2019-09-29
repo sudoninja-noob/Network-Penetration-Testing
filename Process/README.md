@@ -654,11 +654,11 @@ nmap -n -v -sV -Pn -p 3306 --script=mysql-info,mysql-audit,mysql-enum,mysql-data
 • auxiliary/scanner/mysql/mysql_version
 • auxiliary/scanner/mysql/mysql_writable_dirs
  
-   Port 3389  Enumeration commands for Remote Desktop service;  
-ncrack -vv --user administrator -P passwords.txt rdp://192.168.1.10,CL=1 rdesktop 192.168.1.10 
+ Port 3389  Enumeration commands for Remote Desktop service;  
+  ncrack -vv --user administrator -P passwords.txt rdp://192.168.1.10,CL=1 rdesktop 192.168.1.10 
   Metasploit Modules for Remote Desktop service;
 
 
-•  auxiliary/scanner/rdp/ms12_020_check
+• auxiliary/scanner/rdp/ms12_020_check
 • auxiliary/scanner/rdp/rdp_scanner 
       
