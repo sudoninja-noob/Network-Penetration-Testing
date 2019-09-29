@@ -66,4 +66,4 @@ i686-w32-mingw32-gcc -o exp exploit.c
 steghide extract -sf irked.jpg
 
 
-https://github.com/wwong99/os-survival
+-https://github.com/wwong99/os-survival
