@@ -1,3 +1,11 @@
+<h2>POINT</h2>
+-scanning
+-Enumertion
+-Exploit
+-Priviglage Escaltion
+-Post Enumertion
+-Proof of content
+
 <h1>information gathering - IP range </h1>
 ~~
 IP range discover 
