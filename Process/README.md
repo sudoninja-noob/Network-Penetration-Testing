@@ -661,4 +661,63 @@ nmap -n -v -sV -Pn -p 3306 --script=mysql-info,mysql-audit,mysql-enum,mysql-data
 
 • auxiliary/scanner/rdp/ms12_020_check
 • auxiliary/scanner/rdp/rdp_scanner 
-      
+
+<h1>Exploit</h1>
+expoit DB
+seachsploit 
+metaasploit
+google 
+
+<h1>privilege escalation</h1>
+
+
+
+Windows:
+ date /t
+ time/t 
+hostname 
+whoami (or echo %username%)
+ ipconfig 
+dir 
+type proof.txt 
+type network-secret.txt 
+systeminfo 
+net users 
+net localgroup 
+administrators 
+ipconfig -all 
+route print 
+arp -a 
+netstat -ano 
+tasklist /svc 
+net start 
+net share 
+net use 
+
+
+Linux:
+date 
+whoami 
+id 
+hostname 
+/sbin/ifconfig 
+pwd 
+ls -l 
+cat proof.txt 
+cat network-secret.txt 
+cat /etc/issue 
+uname -a 
+cat /etc/passwd 
+cat /etc/group 
+cat /etc/shadow 
+cat /etc/sudoers 
+ls -alh /var/mail/ 
+ls -ahlR /root/ 
+ls -ahlR /home/ 
+who w last 
+/sbin/ifconfig -a 
+cat /etc/network/interfaces (or cat /etc/sysconfig/network) 
+arp -e /sbin/route -nee 
+ps aux 
+ps -ef 
+cat /etc/services
