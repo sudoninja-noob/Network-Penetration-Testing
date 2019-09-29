@@ -661,4 +661,4 @@ ncrack -vv --user administrator -P passwords.txt rdp://192.168.1.10,CL=1 rdeskto
 
 •  auxiliary/scanner/rdp/ms12_020_check
 • auxiliary/scanner/rdp/rdp_scanner 
-      Posted 21st February 2018 by Unknown   Labels: cewl cheat sheet enum4linux hydra medusa msrpc MsSQL MySQL nikto nmap onesixtyone Oracle DB smb smbclient smtp snmpwalk sqlmap ssh      
+      
