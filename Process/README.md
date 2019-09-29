@@ -1,11 +1,11 @@
-<h2>information gathering - IP range </h2>
+<h1>information gathering - IP range </h1>
 ~~
 IP range discover 
 netdiscover -r 192.168.1.1/24
 nbtscan  					--------------------------------------------------  additional information
 ~~
 
-<h2>Scanning</h2>
+<h1>Scanning</h1>
 sudo masscan --router-mac ba:62:4d:d8:39:32 -p0-65535 --max-rate 300 --interactive 10.11.1.5
 
 masscan -p 1-65535 10.11.1.223 -e tap0 --rate 1000 --router-ip 10.11.0.1
@@ -41,7 +41,7 @@ http://www.0daysecurity.com/penetration-testing/enumeration.html
 https://highon.coffee/blog/penetration-testing-tools-cheat-sheet/#enumeration--attacking-network-services
 
 
-<h2>Enumeration</h2>
+<h1>Enumeration</h1>
 
 
 enum4linux -a [ip]  								------------------ check  services  version     (PORT 139 )
